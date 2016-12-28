@@ -4,7 +4,11 @@
 - `data-` prefix used to specify custom attributes on HTML elements
 - Javascript can listen for "transition end" from CSS, use that for key timeout
     - preferable to standard timeout
-
+- Bug: if you hold down a key, the sound keeps working but it's unable to remove
+the "playing" class. 
+- Design could be improved by keeping audio elements and data items together, or
+lazy-loading the audio files. Not clear if they must load when the page loads
+or if they are called over the network gradually.
 
 ## Possible Todos:
 
@@ -28,3 +32,5 @@ window.addEventListener('keydown', function(e) {
    console.log(e.keyCode); 
 });
 ```
+
+Doing event delegation in vanilla JS
