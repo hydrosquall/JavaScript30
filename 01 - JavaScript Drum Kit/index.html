@@ -78,25 +78,24 @@
       // Delegation implementation based on the following response:
       // http://stackoverflow.com/questions/24117369/vanilla-js-event-delegation-dealing-with-child-elements-of-the-target-element
       
-      // Event delegation implementation
-      //- document.querySelector('body').addEventListener('transitionend', function(e) {
-      //-     // this is "body"
-      //-     if (e.target.matches('.key')) {
-      //-         if (e.propertyName == 'transform') { // only fire on 1 of 6
-      //-           e.target.classList.remove('playing');
-      //-         }
-      //-     }  // else return null
-      //- });
-      
-      // Wes Bos implementation
-      function removeTransition(e) {
-        if (e.propertyName == 'transform') {
-            console.log("removing class");
-            this.classList.remove('playing');
-          } // else return null
+      // Event delegation implementation of transition removal
+      function removeTransitionDelegate(e) {
+        if (e.target.matches('.key') && (e.propertyName == 'transform') ) {
+              e.target.classList.remove('playing');
+        }
       }
-      const keys = document.querySelectorAll('.key');
-      keys.forEach(key => key.addEventListener('transitionend', removeTransition));
+      // 
+      document.querySelector('body').addEventListener('transitionend', removeTransitionDelegate);
+      
+      // Wes Bos implementation, creates n event listeners (for each sound)
+      //- function removeTransition(e) {
+      //-   if (e.propertyName == 'transform') {
+      //-       console.log("removing class");
+      //-       this.classList.remove('playing');
+      //-     } // else return null
+      //- }
+      //- const keys = document.querySelectorAll('.key');
+      //- keys.forEach(key => key.addEventListener('transitionend', removeTransition));
     </script>
   </body>
 </html>
