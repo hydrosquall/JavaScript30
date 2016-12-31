@@ -1,0 +1,68 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title JS + CSS Clock
+    link(rel="stylesheet" href="main.css")
+  
+  body
+    .clock
+      .clock-face
+        .hand.hour-hand
+        .hand.min-hand
+        .hand.second-hand
+
+    script.
+      const secondHand = document.querySelector('.second-hand');
+      const minHand    = document.querySelector('.min-hand');
+      const hourHand   = document.querySelector('.hour-hand');
+
+      function moveHand(hand, degrees) {
+        // Controller for the second, minute, and hour hands.
+        // Not sure how to handle the "disjoing jump" bug for now, revisit later.
+        if (degrees == 0) {  // handle edge case of rotating 270 degrees the wrong way.
+          hand.style.transition = 'none !important';
+          hand.style.transform = 'rotate(90deg)';
+          console.log('beep');
+        } else {
+          hand.style.transition = 'all cubic-bezier(0.1, 2.7, 0.58, 1) 0.05s';
+          hand.style.transform  = `rotate(${degrees + 90}deg)`;  // 90 degree offset
+        }
+      }
+
+      function setDate() {
+        const now = new Date();
+        const seconds = now.getSeconds();
+        const minutes = now.getMinutes();
+        const hours = now.getHours();
+
+        // do quick fraction rules to see how time expressions simplify to the following
+        const secondsDegrees = (seconds * 6); // offset because start at noon 
+        const minDegrees     = (minutes * 6); // offset because start at noon 
+        const hourDegrees    = (hours * 30) + (minutes/2); // offset because start at noon 
+
+        //- if (secondsDegrees == 90) {  // handle edge case of rotating 270 degrees the wrong way.
+        //-   secondHand.style.transition = 'none';
+        //-   secondHand.style.transform = 'rotate(90deg)';
+        //-   secondHand.style.transition = 'all cubic-bezier(0.1, 2.7, 0.58, 1) 0.05s';
+        //-   console.log('beep');
+        //- } else {
+        //-   secondHand.style.transform = `rotate(${secondsDegrees}deg)`;  // es6 template literal
+
+        //- }
+        console.log(secondsDegrees);
+        moveHand(secondHand, secondsDegrees);
+        moveHand(minHand, minDegrees);
+        moveHand(hourHand, hourDegrees);
+
+        // It's possible that the minute hand has the bug that I handled above too
+        // However, it is left off until I think of a cleaner way to test for this.
+        //- minHand.style.transform    = `rotate(${minDegrees}deg)`;  
+        //- hourHand.style.transform   = `rotate(${hourDegrees}deg)`;  
+      }
+
+
+      // Call function every 1000 ms
+      setInterval(setDate, 1000);
+
+      setDate();
