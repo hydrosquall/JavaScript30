@@ -1,13 +1,12 @@
-doctype html
-html(lang='en')
-  head
-    meta(charset='UTF-8')
-    title Array Cardio 💪
-  body
-    p
-      em Psst: have a look at the JavaScript Console
-      |  💁
-    script.
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Array Cardio 💪</title>
+  </head>
+  <body>
+    <p><em>Psst: have a look at the JavaScript Console</em> 💁</p>
+    <script>
       // Get your shorts on - this is an array workout!
       // ## Array Cardio Day 1
       // Some data we can work with
@@ -26,7 +25,7 @@ html(lang='en')
       { first: 'Hanna', last: 'Hammarström', year: 1829, passed: 1909 }
       ];
       const people = ['Beck, Glenn', 'Becker, Carl', 'Beckett, Samuel', 'Beddoes, Mick', 'Beecher, Henry', 'Beethoven, Ludwig', 'Begin, Menachem', 'Belloc, Hilaire', 'Bellow, Saul', 'Benchley, Robert', 'Benenson, Peter', 'Ben-Gurion, David', 'Benjamin, Walter', 'Benn, Tony', 'Bennington, Chester', 'Benson, Leana', 'Bent, Silas', 'Bentsen, Lloyd', 'Berger, Ric', 'Bergman, Ingmar', 'Berio, Luciano', 'Berle, Milton', 'Berlin, Irving', 'Berne, Eric', 'Bernhard, Sandra', 'Berra, Yogi', 'Berry, Halle', 'Berry, Wendell', 'Bethea, Erin', 'Bevan, Aneurin', 'Bevel, Ken', 'Biden, Joseph', 'Bierce, Ambrose', 'Biko, Steve', 'Billings, Josh', 'Biondo, Frank', 'Birrell, Augustine', 'Black, Elk', 'Blair, Robert', 'Blair, Tony', 'Blake, William'];
-
+      
       // Array.prototype.filter()
       // 1. Filter the list of inventors for those who were born in the 1500's
       
@@ -36,10 +35,10 @@ html(lang='en')
             return true;
           } 
       });
-
+      
       // Compact solution
       const fifteen2 = inventors.filter( inventor => (inventor.year >= 1500 && inventor.year < 1600));
-
+      
       // result nicely formatted
       console.table(fifteen2);
       
@@ -48,9 +47,9 @@ html(lang='en')
       // Use a template string for cleanliness.
       const fullNames = inventors.map(inventor => `${inventor.first} ${inventor.last}`
       );
-
+      
       console.log(fullNames);
-
+      
       // Array.prototype.sort()
       // 3. Sort the inventors by birthdate, oldest to youngest
       
@@ -61,40 +60,40 @@ html(lang='en')
             return -1;
         }
       });
-
+      
       const ordered2 = inventors.sort((a, b) => a.year > b.year ? 1 : 1 );
       console.table(ordered2);
-
+      
       // Array.prototype.reduce()
       // 4. How many years did all the inventors live?
       // Pass the data forward: second arg is the initial value!
       const totalYears = inventors.reduce((total, inventor) => (total + (inventor.passed - inventor.year)) , 0)
       console.log(totalYears);
-
+      
       // 5. Sort the inventors by years lived
       const sortedAge = inventors.sort((a, b) => {
         const ageA = a.passed - a.year;
         const ageB = b.passed - b.year;
-
+      
         return (ageA > ageB) ? 1 : -1;
       });
-
+      
       // It would probably be better to compute the ages once, and sort by that. Let's see what that looks like below
       console.table(sortedAge);
-
+      
       // use inventor age as the key to sort on.
       const sorted2 = inventors
                   .map(inventor => [inventor.passed - inventor.year, inventor])
                   .sort((prev, next) => prev[0] > next[0] ? 1 : -1 )
                   .map(pair => pair[1]); // plug out the second itemal
-
+      
       console.table(sorted2);
       
       // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name. 
       // Generate this by going to the 
       
       //- const links = category.querySelectorAll('a');
-
+      
       // 2 different ways to represent the above as a list instead of nodelist
       // ES6 spread notation
       //- const links = [...category.querySelectorAll('a')];
@@ -104,12 +103,12 @@ html(lang='en')
       const de = links
                       .map(link => link.textContent)
                       .filter(streetName => streetName.includes('de'));
-
+      
         
       }
-
+      
       // todo: see if includes performance is as fast as a compiled regex expression.
-
+      
       // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
       // 7. sort Exercise
       // Sort the people alphabetically by last name
@@ -118,28 +117,31 @@ html(lang='en')
       const alpha = people
                       .map(person => person.split(", "))
                       .sort((lastOne, nextOne) => (lastOne[0] > nextOne[0] ? 1 : -1 ));
-
+      
       console.table(alpha);
-
+      
       // 8. Reduce Exercise
       // Sum up the instances of each of these
       
       const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
-
+      
       // pandas would let you do value_counts method.
       // Initialize empty dict of counts
       const transportation = data.reduce(function(dictionary, item) {
-
+      
         if (!dictionary[item]) { // Check if have seen item before.
             dictionary[item] = 1;
         } else {
             dictionary[item]++;
         }
-
+      
         return dictionary;
       }, {});
-
+      
       console.log(transportation);
-
+      
       // To be continued: visit bocoup or Mode analytics  "learnjsdata" for more
       // js primitives exercises.
+    </script>
+  </body>
+</html>
