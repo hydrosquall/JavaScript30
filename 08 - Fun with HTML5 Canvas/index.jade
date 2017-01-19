@@ -6,13 +6,13 @@ html(lang='en')
   body
     canvas#draw(width='800', height='800')
     script.
-      const canvas = document.querySelector('$draw');
+      const canvas = document.querySelector('#draw');
       const ctx = canvas.getContext('2d');
 
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       // Styles
-      ctx.strokeStyle = 'BADA55';
+      ctx.strokeStyle = '#BADA55';
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
       
@@ -21,10 +21,29 @@ html(lang='en')
       let lastY = 0; // where line ends
 
       function draw(e) {
-        console.log(e);
+        if(!isDrawing) return; // stop if mouesdown
+
+        ctx.beginPath();
+        // start from
+        ctx.moveTo(lastX, lastY);
+        // go to
+        ctx.lineTo(e.offsetX, e.offsetY);
+        ctx.stroke(); // actually draw!
+
+        // update the prev location
+        // see ES6 trick: structuring an array
+        [lastX, lastY] = [e.offsetX, e.offsetY];
+        //- lastX = e.offsetX;
+        //- lastY = e.offsetY;
+        //- console.log(e);
       }
 
       canvas.addEventListener('mousemove', draw)
+
+      // only do things if mousedown
+      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mouseup', () => isDrawing = false);
+      canvas.addEventListener('mouseout', () => isDrawing = false);
     style.
       html, body {
       margin:0;
