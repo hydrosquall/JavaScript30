@@ -1,0 +1,31 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title HTML5 Canvas
+  body
+    canvas#draw(width='800', height='800')
+    script.
+      const canvas = document.querySelector('$draw');
+      const ctx = canvas.getContext('2d');
+
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      // Styles
+      ctx.strokeStyle = 'BADA55';
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      
+      let isDrawing = false;
+      let lastX = 0;
+      let lastY = 0; // where line ends
+
+      function draw(e) {
+        console.log(e);
+      }
+
+      canvas.addEventListener('mousemove', draw)
+    style.
+      html, body {
+      margin:0;
+      }
