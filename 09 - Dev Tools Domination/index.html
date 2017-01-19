@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Console Tricks!</title>
+  </head>
+  <body>
+    <p onclick="makeGreen()">×BREAK×DOWN×</p>
+    <script>
+      const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+      function makeGreen() {
+        const p = document.querySelector('p');
+        p.style.color = '#BADA55';
+        p.style.fontSize = '50px';
+      }
+      
+      // Basic: a little function that changes the color of a text
+      
+      // You can right-click a node and break whenever a function is causing its attribute to change!
+      // Also can listen for subtree modification or node removal
+      
+      // Regular
+      console.log("bonjour");
+      
+      // Interpolated
+      console.log("bonjour mr. %s ", "sam"); // old way
+      const name = "pete";
+      console.log(`bonjour mr. ${name}`);
+      
+      // Styled
+      console.log("%c I am some colorful text", 'font-size: 16px; background: blue; color: yellow');
+      
+      // warning!
+      console.warn('Bad yellow note');
+      // Error :|
+      console.error("Terrible!");
+      // Info
+      console.info('Make a little i icon');
+      
+      // Testing properties of the document
+      // Test followed by error message, silent if no prob
+      
+      const p = document.querySelector('p');
+      console.assert(p.classList.contains('ouch'), 'you did not select the right element! Must add class');
+      // clearing
+      //- console.clear();
+      
+      // Viewing DOM Elements
+      console.log(p); // see element
+      console.dir(p); // give you all properties + methods that live on that element. 
+      
+      console.clear();
+      
+      // Grouping text together for convenience of reading
+      dogs.forEach(dog => {
+        // or console.group
+        console.groupCollapsed(`${dog.name}`);
+        console.log(`This is ${dog.name}`);
+        console.log(`${dog.name} is ${dog.age} years old`);
+        console.log(`${dog.name} is ${7 * dog.age} dog years old`);
+        console.groupEnd(`${dog.name}`);
+      })
+      
+      // counting
+      
+      console.count('Wes'); // counts instances of this string
+      console.count('Bob');
+      console.count('Bob'); // counts instances of this string
+      console.count('Bob');
+      console.count('Bob'); // counts instances of this string
+      console.count('Wes');
+      
+      // timing
+      // quick and dirty, instead of performance.now
+      console.time('Fetching Data');
+      fetch('https://api.github.com/users/hydrosquall')
+        .then(data => data.json())
+        .then(data => {
+          console.timeEnd('Fetching Data');
+          console.log(data);
+        });
+      
+      // Reminder: take array of objects & table it
+      
+      console.table(dogs);
+    </script>
+  </body>
+</html>
