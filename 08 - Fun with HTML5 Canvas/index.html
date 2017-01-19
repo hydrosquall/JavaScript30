@@ -16,14 +16,22 @@
       ctx.strokeStyle = '#BADA55';
       ctx.lineJoin = 'round';
       ctx.lineCap = 'round';
+      ctx.lineWidth = 100; // adjustable!
+      
+      // choices: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/globalCompositeOperation
+      //- ctx.globalCompositeOperation = 'multiply'; // blends colors, lots to pick from
+      ctx.globalCompositeOperation = 'screen'; // blends colors, lots to pick from
       
       let isDrawing = false;
       let lastX = 0;
       let lastY = 0; // where line ends
+      let hue = 0;
+      let direction = true;
       
       function draw(e) {
         if(!isDrawing) return; // stop if mouesdown
       
+        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`; // automatic modulo
         ctx.beginPath();
         // start from
         ctx.moveTo(lastX, lastY);
@@ -34,17 +42,40 @@
         // update the prev location
         // see ES6 trick: structuring an array
         [lastX, lastY] = [e.offsetX, e.offsetY];
+        hue++;
+      
+        if (hue >= 360) {
+          hue = 0; // technically not needed
+        }
+      
+        if (ctx.lineWidth >= 100 || ctx.lineWidth <= 1) { // shiftable param
+          direction = !direction;
+        }
+      
+        if (direction) {
+          ctx.lineWidth++;
+        } else {
+          ctx.lineWidth--;
+      
+        }
         //- lastX = e.offsetX;
         //- lastY = e.offsetY;
         //- console.log(e);
       }
       
+      // To understand HSL colors:
+      // http://mothereffinghsl.com/
+      
       canvas.addEventListener('mousemove', draw)
       
       // only do things if mousedown
-      canvas.addEventListener('mousedown', () => isDrawing = true);
+      canvas.addEventListener('mousedown', (e) => {
+        isDrawing = true;
+        [lastX, lastY] = [e.offsetX, e.offsetY]; // allows for continuous new lines
+      });
       canvas.addEventListener('mouseup', () => isDrawing = false);
       canvas.addEventListener('mouseout', () => isDrawing = false);
+      
     </script>
     <style>
       html, body {
